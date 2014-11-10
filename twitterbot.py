@@ -43,7 +43,7 @@ def main():
                             # the desired tweet while catching edge cases
                             t2 = api.GetUserTimeline(screen_name=i,since_id=j.id)
                             # +10 to ensure against count omission
-                            t3 = api.GetuserTimeline(screen_name=i,count = len(t2)+10)
+                            t3 = api.GetUserTimeline(screen_name=i,count = len(t2)+10)
                             api.PostRetweet(t3[t3.index(j)+1].id)
                 update(i,tweets[0].id)
         sleep(120)
