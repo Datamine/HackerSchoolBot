@@ -29,22 +29,25 @@ def main():
         hsers = [x.rstrip('\n') for x in f.readlines()]
     while True:
         for i in hsers:
-            print i,getsinceid(i)
             tweets = api.GetUserTimeline(screen_name=i,include_rts=False, exclude_replies=False,since_id=getsinceid(i))
             if tweets:
                 for j in tweets:
                     for k in j.user_mentions:
-                        print "FUCK YOU", [j.user_mentions]
                         if "hsalums" in str(k) and len(j.text)>20:
-                            print j.text
-                            api.PostRetweet(j.id)
+                            try:
+                                api.PostRetweet(j.id)
+                            except:
+                                print "error 1"
                         elif "hsalums" in str(k):
                             # Inelegant, but it's the best way to retrieve
                             # the desired tweet while catching edge cases
                             t2 = api.GetUserTimeline(screen_name=i,since_id=j.id)
                             # +10 to ensure against count omission
-                            t3 = api.GetUserTimeline(screen_name=i,count = len(t2)+10)
-                            api.PostRetweet(t3[t3.index(j)+1].id)
+                            t3 = api.GetUserTimeline(screen_name=i,include_rts=False,count = len(t2)+10)
+                            try:
+                                api.PostRetweet(t3[t3.index(j)+1].id)
+                            except:
+                                print "error 2"
                 update(i,tweets[0].id)
         sleep(120)
 
