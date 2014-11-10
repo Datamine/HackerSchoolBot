@@ -29,7 +29,10 @@ def main():
         hsers = [x.rstrip('\n') for x in f.readlines()]
     while True:
         for i in hsers:
-            tweets = api.GetUserTimeline(screen_name=i,include_rts=False, exclude_replies=False,since_id=getsinceid(i))
+            try:
+                tweets = api.GetUserTimeline(screen_name=i,include_rts=False, exclude_replies=False,since_id=getsinceid(i))
+            except:
+                continue
             if tweets:
                 for j in tweets:
                     for k in j.user_mentions:
