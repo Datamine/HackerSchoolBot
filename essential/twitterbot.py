@@ -11,14 +11,14 @@ def update(tweetid):
     return
 
 def main():
-    with open("hackerschoolers2","r") as f:
+    with open("hackerschoolers","r") as f:
         hsers = [x.rstrip('\n') for x in f.readlines()]
     with open("tweetids","r") as g:
         tweetids = [x.rstrip('\n') for x in g.readlines()]
     while True:
         tweets = api.GetMentions(count=800)
-        tweets = filter(lambda y: y.GetUser.screen_name in hackerschoolers2,tweets)
-        tweets = filter(lambda z: z.id not in tweetids,tweets)
+        tweets = filter(lambda y: y.GetUser().screen_name in hsers, tweets)
+        tweets = filter(lambda z: str(z.id) not in tweetids, tweets)
         for j in tweets:
             if len(j.text)>20:
                 try:
