@@ -12,7 +12,7 @@ def update(tweetid):
 
 def main():
     with open("hackerschoolers","r") as f:
-        hsers = [x.rstrip('\n') for x in f.readlines()]
+        hsers = [x.rstrip('\n').lower() for x in f.readlines()]
     with open("tweetids","r") as g:
         tweetids = [x.rstrip('\n') for x in g.readlines()]
     while True:
@@ -24,7 +24,8 @@ def main():
                 try:
                     api.PostRetweet(j.id)
                 except:
-                    print "error 1"
+                    print "=====\n" + j.text
+                    print "error 1\n====="
             else:
                 name = j.GetUser().screen_name
                 t2 = api.GetUserTimeline(screen_name=name,count=50)
