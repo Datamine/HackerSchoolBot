@@ -17,7 +17,7 @@ def main():
         tweetids = [x.rstrip('\n') for x in g.readlines()]
     while True:
         tweets = api.GetMentions(count=800)
-        tweets = filter(lambda y: y.GetUser().screen_name in hsers, tweets)
+        tweets = filter(lambda y: y.GetUser().screen_name.lower() in hsers, tweets)
         tweets = filter(lambda z: str(z.id) not in tweetids, tweets)
         for j in tweets:
             if len(j.text)>20:
@@ -34,6 +34,7 @@ def main():
                 except:
                     print "error 2"
             update(j.id)
+            tweetids.append(str(j.id))
         sleep(120)
 
 if __name__=='__main__':
